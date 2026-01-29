@@ -1,0 +1,25 @@
+package com.travelcompany.booking.repository;
+
+import com.travelcompany.booking.model.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import java.util.Optional;
+
+/**
+ * Repository interface for Customer entity
+ * Provides CRUD operations and custom queries for Customer management
+ */
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
+    Optional<Customer> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    @Query("SELECT c FROM Customer c WHERE c.phone = ?1")
+    Optional<Customer> findByPhone(String phone);
+
+    @Query("SELECT COUNT(c) FROM Customer c")
+    long countAllCustomers();
+}
